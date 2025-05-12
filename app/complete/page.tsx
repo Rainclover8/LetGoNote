@@ -1,0 +1,102 @@
+"use client"
+
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import Image from "next/image"
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
+import { motion } from "framer-motion"
+import { Home, PenLine, Heart } from "lucide-react"
+
+const affirmations = [
+  "Her gün yeni bir başlangıç.",
+  "Kendine iyi davranmayı unutma.",
+  "Yalnız değilsin.",
+  "Duygularını ifade etmek cesaret gerektirir.",
+  "Bugün attığın adım, yarın için bir armağan.",
+  "Kendini affetmek, iyileşmenin ilk adımıdır.",
+  "Güçlü olmak, her zaman güçlü hissetmek değildir.",
+  "Küçük adımlar, büyük değişimler yaratır.",
+  "Nefes al, şu an buradasın.",
+  "Her duygu geçicidir, sen kalıcısın.",
+]
+
+export default function CompletePage() {
+  const router = useRouter()
+  const [affirmation, setAffirmation] = useState("")
+
+  useEffect(() => {
+    // Clear localStorage
+    localStorage.removeItem("text")
+    localStorage.removeItem("releaseMethod")
+
+    // Get a random affirmation
+    const randomIndex = Math.floor(Math.random() * affirmations.length)
+    setAffirmation(affirmations[randomIndex])
+  }, [])
+
+  const handleWriteAgain = () => {
+    router.push("/emotion")
+  }
+
+  const handleGoHome = () => {
+    router.push("/")
+  }
+
+  return (
+    <main className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden p-4">
+      {/* Background image */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/90 to-purple-100/90 z-10" />
+        <Image src="/images/forest-bg.png" alt="Huzurlu orman manzarası" fill className="object-cover" sizes="100vw" />
+      </div>
+
+      <motion.div
+        className="w-full max-w-2xl relative z-20"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Card className="p-8 md:p-12 shadow-xl bg-white/90 backdrop-blur-sm">
+          <div className="text-center mb-8">
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.3, type: "spring", stiffness: 200, damping: 15 }}
+              className="w-16 h-16 rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center mx-auto mb-6"
+            >
+              <Heart className="h-8 w-8 text-white" />
+            </motion.div>
+
+            <h1 className="text-2xl md:text-3xl font-bold mb-4 text-slate-800">Teşekkürler</h1>
+
+            <p className="text-lg md:text-xl mb-6 text-slate-600">Umarız kendini daha iyi hissediyorsun.</p>
+
+            <blockquote className="italic text-xl md:text-2xl text-indigo-700 mb-8 px-6">"{affirmation}"</blockquote>
+          </div>
+
+          <div className="flex flex-col md:flex-row gap-4 justify-center">
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={handleGoHome}
+              className="border-indigo-200 text-indigo-700 hover:bg-indigo-50"
+            >
+              <Home className="mr-2 h-5 w-5" />
+              Ana Sayfaya Dön
+            </Button>
+
+            <Button
+              size="lg"
+              onClick={handleWriteAgain}
+              className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white"
+            >
+              <PenLine className="mr-2 h-5 w-5" />
+              Tekrar Yaz
+            </Button>
+          </div>
+        </Card>
+      </motion.div>
+    </main>
+  )
+}
