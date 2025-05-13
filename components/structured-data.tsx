@@ -15,6 +15,7 @@ export default function StructuredData() {
       "@type": "Organization",
       name: "LetGoNote Team",
     },
+    image: "/images/background.png",
   }
 
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />

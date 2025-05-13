@@ -48,7 +48,7 @@ export default function CompletePage() {
       {/* Background image */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/90 to-purple-100/90 z-10" />
-        <Image src="/images/forest-bg.png" alt="Huzurlu orman manzarası" fill className="object-cover" sizes="100vw" />
+        <Image src="/images/background.png" alt="Huzurlu manzara" fill className="object-cover" sizes="100vw" />
       </div>
 
       <motion.div
@@ -63,9 +63,16 @@ export default function CompletePage() {
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.3, type: "spring", stiffness: 200, damping: 15 }}
-              className="w-16 h-16 rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center mx-auto mb-6"
+              className="w-16 h-16 rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center mx-auto mb-6 overflow-hidden"
             >
-              <Heart className="h-8 w-8 text-white" />
+              <Image
+                src="/images/background.png"
+                alt="Tamamlandı"
+                width={64}
+                height={64}
+                className="object-cover opacity-50"
+              />
+              <Heart className="h-8 w-8 text-white absolute" />
             </motion.div>
 
             <h1 className="text-2xl md:text-3xl font-bold mb-4 text-slate-800">Teşekkürler</h1>

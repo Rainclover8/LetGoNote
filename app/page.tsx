@@ -10,8 +10,8 @@ export default function LandingPage() {
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-br from-slate-800/70 to-slate-900/90 z-10" />
         <Image
-          src="/public/placeholder-logo.jpg"
-          alt="Huzurlu orman manzarası"
+          src="/images/background.png"
+          alt="Huzurlu manzara"
           fill
           priority
           className="object-cover"
@@ -23,7 +23,15 @@ export default function LandingPage() {
       <div className="container relative z-20 flex flex-col items-center justify-center flex-grow px-4 py-16 text-white">
         <div className="max-w-3xl mx-auto text-center">
           <div className="mb-6 flex justify-center">
-            <Image src="placeholder-logo.jpg" alt="LetGoNote Logo" width={120} height={120} className="animate-float" />
+            <div className="w-24 h-24 rounded-full overflow-hidden">
+              <Image
+                src="/images/background.png"
+                alt="LetGoNote Logo"
+                width={96}
+                height={96}
+                className="object-cover"
+              />
+            </div>
           </div>
 
           <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">LetGoNote</h1>

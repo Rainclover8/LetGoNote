@@ -14,49 +14,39 @@ const emotions = [
     emoji: "😔",
     label: "Üzgünüm",
     color: "from-blue-200 to-blue-300",
-    bgImage: "/images/sad-bg.png",
   },
   {
     id: "angry",
     emoji: "😡",
     label: "Öfkeliyim",
     color: "from-red-200 to-red-300",
-    bgImage: "/images/angry-bg.png",
   },
   {
     id: "anxious",
     emoji: "😰",
     label: "Kaygılıyım",
     color: "from-purple-200 to-purple-300",
-    bgImage: "/images/anxious-bg.png",
   },
   {
     id: "hurt",
     emoji: "😞",
     label: "Kırgınım",
     color: "from-amber-200 to-amber-300",
-    bgImage: "/images/hurt-bg.png",
   },
   {
     id: "uncertain",
     emoji: "😐",
     label: "Belirsizim",
     color: "from-gray-200 to-gray-300",
-    bgImage: "/images/uncertain-bg.png",
   },
 ]
 
 export default function EmotionPage() {
   const router = useRouter()
   const [selectedEmotion, setSelectedEmotion] = useState<string | null>(null)
-  const [bgImage, setBgImage] = useState<string>("/images/forest-bg.png")
 
   const handleEmotionSelect = (emotionId: string) => {
     setSelectedEmotion(emotionId)
-    const emotion = emotions.find((e) => e.id === emotionId)
-    if (emotion) {
-      setBgImage(emotion.bgImage)
-    }
   }
 
   const handleContinue = () => {
@@ -80,7 +70,7 @@ export default function EmotionPage() {
           className="w-full h-full"
         >
           <Image
-            src={bgImage || "/placeholder.svg"}
+            src="/images/background.png"
             alt="Duygu arka planı"
             fill
             className="object-cover transition-opacity duration-500"

@@ -40,31 +40,13 @@ export default function ReleasePage() {
     router.push("/complete")
   }
 
-  // Get background image based on release method
-  const getBackgroundImage = () => {
-    switch (releaseMethod) {
-      case "burn":
-        return "/images/night-sky.png"
-      case "water":
-        return "/images/water-texture.png"
-      case "earth":
-        return "/images/forest-bg.png"
-      case "fly":
-        return "/images/night-sky.png"
-      case "trash":
-        return "/images/forest-bg.png"
-      default:
-        return "/images/forest-bg.png"
-    }
-  }
-
   return (
     <main className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
       {/* Background image */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-br from-slate-800/70 to-slate-900/90 z-10" />
         <Image
-          src={getBackgroundImage() || "/placeholder.svg"}
+          src="/images/background.png"
           alt="Serbest bırakma arka planı"
           fill
           className="object-cover"
@@ -175,7 +157,7 @@ function ReleaseAnimation({ text, method }: { text: string; method: string }) {
               transition={{ duration: 1 }}
             >
               <Image
-                src="/images/water-texture.png"
+                src="/images/background.png"
                 alt="Su dokusu"
                 fill
                 className="object-cover mix-blend-overlay opacity-70"
@@ -221,7 +203,7 @@ function ReleaseAnimation({ text, method }: { text: string; method: string }) {
         className="absolute w-64 h-64 bg-white p-4 rounded shadow-lg flex items-center justify-center overflow-hidden"
         {...animation.paper}
       >
-        <Image src="/images/paper-texture.png" alt="Kağıt dokusu" fill className="object-cover opacity-20" />
+        <Image src="/images/background.png" alt="Kağıt dokusu" fill className="object-cover opacity-20" />
         <p className="text-center text-slate-800 break-words overflow-hidden relative z-10">{text}</p>
         {animation.effect}
       </motion.div>

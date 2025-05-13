@@ -81,36 +81,12 @@ export default function WritePage() {
     router.push("/release")
   }
 
-  // Get background image based on emotion
-  const getBackgroundImage = () => {
-    switch (emotion) {
-      case "sad":
-        return "/images/sad-bg.png"
-      case "angry":
-        return "/images/angry-bg.png"
-      case "anxious":
-        return "/images/anxious-bg.png"
-      case "hurt":
-        return "/images/hurt-bg.png"
-      case "uncertain":
-        return "/images/uncertain-bg.png"
-      default:
-        return "/images/forest-bg.png"
-    }
-  }
-
   return (
     <main className="min-h-screen flex flex-col relative overflow-hidden">
       {/* Background image */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-slate-100/80 z-10" />
-        <Image
-          src={getBackgroundImage() || "/placeholder.svg"}
-          alt="Duygu arka planı"
-          fill
-          className="object-cover"
-          sizes="100vw"
-        />
+        <Image src="/images/background.png" alt="Duygu arka planı" fill className="object-cover" sizes="100vw" />
       </div>
 
       <div className="container max-w-4xl mx-auto px-4 py-8 flex flex-col items-center flex-grow relative z-20">
