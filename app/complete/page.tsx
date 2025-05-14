@@ -15,6 +15,7 @@ export default function CompletePage() {
   const [emotion, setEmotion] = useState<string | null>(null)
   const [initialQuotes, setInitialQuotes] = useState<Quote[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [quoteTag, setQuoteTag] = useState<string | undefined>(undefined)
 
   useEffect(() => {
     // localStorage'dan duygu durumunu al
@@ -28,9 +29,15 @@ export default function CompletePage() {
     // Başlangıç alıntılarını yükle
     const loadInitialQuotes = async () => {
       try {
-        const tag = savedEmotion ? await getTagForEmotion(savedEmotion) : undefined
-        const quotes = await getRandomQuotes(3, tag)
-        setInitialQuotes(Array.isArray(quotes) ? quotes : [])
+        if (savedEmotion) {
+          const tag = await getTagForEmotion(savedEmotion)
+          setQuoteTag(tag)
+          const quotes = await getRandomQuotes(3, tag)
+          setInitialQuotes(Array.isArray(quotes) ? quotes : [])
+        } else {
+          const quotes = await getRandomQuotes(3)
+          setInitialQuotes(Array.isArray(quotes) ? quotes : [])
+        }
       } catch (error) {
         console.error("Error loading initial quotes:", error)
         setInitialQuotes([])
@@ -93,7 +100,7 @@ export default function CompletePage() {
           {!isLoading && initialQuotes.length > 0 && (
             <div className="mb-8 bg-white/50 backdrop-blur-sm rounded-lg p-6 shadow-inner">
               <h2 className="text-lg font-medium text-slate-700 mb-4">Seni ilhamlandıracak düşünceler:</h2>
-              <QuoteCarousel initialQuotes={initialQuotes} tag={emotion ? getTagForEmotion(emotion) : undefined} />
+              <QuoteCarousel initialQuotes={initialQuotes} tag={quoteTag} />
             </div>
           )}
 

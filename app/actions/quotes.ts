@@ -6,8 +6,8 @@ export type Quote = {
   tags: string[]
 }
 
-// Expanded local quotes collection - no API dependency
-export const localQuotes: Quote[] = [
+// Changed from export const to const (no export)
+const localQuotes: Quote[] = [
   {
     content: "Geçmiş seni tanımlamaz, sadece seni buraya getirir. Bundan sonra nereye gideceğin senin elinde.",
     author: "Anonim",
@@ -215,6 +215,16 @@ export const localQuotes: Quote[] = [
     tags: ["calm"],
   },
 ]
+
+// Add a new async function to get all quotes
+export async function getAllQuotes(): Promise<Quote[]> {
+  try {
+    return [...localQuotes]
+  } catch (error) {
+    console.error("Error in getAllQuotes:", error)
+    return []
+  }
+}
 
 // Belirli bir duygu durumuna göre alıntı etiketlerini eşleştiren yardımcı fonksiyon
 export async function getTagForEmotion(emotion: string): Promise<string> {
