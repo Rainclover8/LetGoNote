@@ -2,8 +2,12 @@ import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
+import { getRandomQuote } from "@/app/actions/quotes"
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  // Get a random inspirational quote from our local collection
+  const quote = await getRandomQuote("inspirational")
+
   return (
     <main className="min-h-screen flex flex-col relative overflow-hidden">
       {/* Background image */}
@@ -39,6 +43,13 @@ export default function LandingPage() {
             Bazen sadece içini dökmen gerekir. Yaz, bırak ve kendine bir nefes ver.
           </p>
 
+          {quote && (
+            <div className="mt-8 mb-10 bg-white/10 backdrop-blur-sm p-6 rounded-lg max-w-2xl mx-auto">
+              <blockquote className="text-lg md:text-xl italic text-white/90">"{quote.content}"</blockquote>
+              <footer className="mt-4 text-right text-white/70">— {quote.author || "Anonim"}</footer>
+            </div>
+          )}
+
           <div className="mt-8 md:mt-12">
             <Link href="/emotion">
               <Button
@@ -56,6 +67,9 @@ export default function LandingPage() {
       {/* Footer */}
       <footer className="relative z-20 w-full py-6 text-center text-slate-300 text-sm">
         <p>Bu platform yazdıklarınızı kaydetmez. Burada olan, burada kalır.</p>
+        <Link href="/quotes" className="text-indigo-300 hover:text-indigo-200 underline mt-2 inline-block">
+          İlham Verici Alıntılar
+        </Link>
       </footer>
     </main>
   )
