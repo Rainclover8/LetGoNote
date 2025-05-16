@@ -65,8 +65,8 @@ export default async function LandingPage() {
             <Link href="/breathing">
               <Button
                 size="lg"
-                variant="outline"
-                className="border-white/30 text-white hover:bg-white/10 text-lg px-8 py-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+                variant="secondary"
+                className="bg-indigo-600/80 text-white border-indigo-400 hover:bg-indigo-700 text-lg px-8 py-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 Nefes Egzersizi
               </Button>

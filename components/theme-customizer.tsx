@@ -5,6 +5,7 @@ import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Paintbrush, Check } from "lucide-react"
+import { useToast } from "@/hooks/use-toast"
 
 interface ThemeColor {
   id: string
@@ -62,6 +63,7 @@ const themeColors: ThemeColor[] = [
 export default function ThemeCustomizer() {
   const [isOpen, setIsOpen] = useState(false)
   const [selectedTheme, setSelectedTheme] = useState<string>("default")
+  const { toast } = useToast()
 
   useEffect(() => {
     // Load saved theme from localStorage
@@ -77,25 +79,50 @@ export default function ThemeCustomizer() {
   }, [])
 
   const applyTheme = (themeId: string) => {
-    const theme = themeColors.find((t) => t.id === themeId)
-    if (!theme) return
+    try {
+      const theme = themeColors.find((t) => t.id === themeId)
+      if (!theme) return
 
-    // Apply CSS variables to :root element
-    const root = document.documentElement
-    root.style.setProperty("--primary", theme.primary)
-    root.style.setProperty("--primary-foreground", "210 40% 98%")
+      // Apply CSS variables to :root element
+      const root = document.documentElement
 
-    root.style.setProperty("--secondary", theme.secondary)
-    root.style.setProperty("--secondary-foreground", "222.2 47.4% 11.2%")
+      // Primary colors
+      root.style.setProperty("--primary", theme.primary)
+      root.style.setProperty("--primary-foreground", "210 40% 98%")
 
-    root.style.setProperty("--accent", theme.accent)
-    root.style.setProperty("--accent-foreground", "222.2 47.4% 11.2%")
+      // Secondary colors
+      root.style.setProperty("--secondary", theme.secondary)
+      root.style.setProperty("--secondary-foreground", "222.2 47.4% 11.2%")
 
-    // Update button and UI colors
-    root.style.setProperty("--ring", theme.primary)
+      // Accent colors
+      root.style.setProperty("--accent", theme.accent)
+      root.style.setProperty("--accent-foreground", "222.2 47.4% 11.2%")
 
-    // Save to localStorage
-    localStorage.setItem("selectedTheme", themeId)
+      // Update button and UI colors
+      root.style.setProperty("--ring", theme.primary)
+
+      // Force a re-render of styled components
+      document.body.classList.remove("theme-applied")
+      void document.body.offsetWidth // Trigger reflow
+      document.body.classList.add("theme-applied")
+
+      // Save to localStorage
+      localStorage.setItem("selectedTheme", themeId)
+
+      // Notify user
+      toast({
+        title: "Tema değiştirildi",
+        description: `${theme.name} teması uygulandı.`,
+        duration: 2000,
+      })
+    } catch (error) {
+      console.error("Tema uygulama hatası:", error)
+      toast({
+        title: "Tema değiştirilemedi",
+        description: "Bir hata oluştu. Lütfen tekrar deneyin.",
+        variant: "destructive",
+      })
+    }
   }
 
   const handleThemeChange = (themeId: string) => {
@@ -107,9 +134,8 @@ export default function ThemeCustomizer() {
     <div className="fixed bottom-4 left-4 z-50">
       <Button
         size="icon"
-        variant="outline"
         onClick={() => setIsOpen(!isOpen)}
-        className="rounded-full h-10 w-10 bg-indigo-100 border-indigo-300 shadow-md hover:bg-indigo-200 text-indigo-600"
+        className="rounded-full h-10 w-10 bg-indigo-600 text-white shadow-md hover:bg-indigo-700"
       >
         <Paintbrush className="h-5 w-5" />
       </Button>
