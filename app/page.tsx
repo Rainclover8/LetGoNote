@@ -3,6 +3,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 import { getRandomQuote } from "@/app/actions/quotes"
+import ThemeCustomizer from "@/components/theme-customizer"
 
 export default async function LandingPage() {
   // Get a random inspirational quote from our local collection
@@ -50,7 +51,7 @@ export default async function LandingPage() {
             </div>
           )}
 
-          <div className="mt-8 md:mt-12">
+          <div className="mt-8 md:mt-12 flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/emotion">
               <Button
                 size="lg"
@@ -60,6 +61,16 @@ export default async function LandingPage() {
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
+
+            <Link href="/breathing">
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-white/30 text-white hover:bg-white/10 text-lg px-8 py-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                Nefes Egzersizi
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
@@ -67,10 +78,18 @@ export default async function LandingPage() {
       {/* Footer */}
       <footer className="relative z-20 w-full py-6 text-center text-slate-300 text-sm">
         <p>Bu platform yazdıklarınızı kaydetmez. Burada olan, burada kalır.</p>
-        <Link href="/quotes" className="text-indigo-300 hover:text-indigo-200 underline mt-2 inline-block">
-          İlham Verici Alıntılar
-        </Link>
+        <div className="flex justify-center gap-4 mt-2">
+          <Link href="/quotes" className="text-indigo-300 hover:text-indigo-200 underline inline-block">
+            İlham Verici Alıntılar
+          </Link>
+          <Link href="/sound" className="text-indigo-300 hover:text-indigo-200 underline inline-block">
+            Rahatlatıcı Sesler
+          </Link>
+        </div>
       </footer>
+
+      {/* Theme customizer */}
+      <ThemeCustomizer />
     </main>
   )
 }

@@ -6,9 +6,11 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { motion } from "framer-motion"
-import { Home, PenLine, Heart, BookOpen } from "lucide-react"
+import { Home, PenLine, Heart, BookOpen, BarChart } from "lucide-react"
 import QuoteCarousel from "@/components/quote-carousel"
 import { type Quote, getRandomQuotes, getTagForEmotion } from "@/app/actions/quotes"
+import ConfettiEffect from "@/components/confetti-effect"
+import MoodTracker from "@/components/mood-tracker"
 
 export default function CompletePage() {
   const router = useRouter()
@@ -16,6 +18,7 @@ export default function CompletePage() {
   const [initialQuotes, setInitialQuotes] = useState<Quote[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [quoteTag, setQuoteTag] = useState<string | undefined>(undefined)
+  const [showMoodTracker, setShowMoodTracker] = useState(false)
 
   useEffect(() => {
     // localStorage'dan duygu durumunu al
@@ -63,6 +66,9 @@ export default function CompletePage() {
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden p-4">
+      {/* Konfeti efekti */}
+      <ConfettiEffect pieceCount={150} duration={5000} />
+
       {/* Background image */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/90 to-purple-100/90 z-10" />
@@ -101,6 +107,24 @@ export default function CompletePage() {
             <div className="mb-8 bg-white/50 backdrop-blur-sm rounded-lg p-6 shadow-inner">
               <h2 className="text-lg font-medium text-slate-700 mb-4">Seni ilhamlandıracak düşünceler:</h2>
               <QuoteCarousel initialQuotes={initialQuotes} tag={quoteTag} />
+            </div>
+          )}
+
+          {showMoodTracker ? (
+            <div className="mb-8">
+              <MoodTracker />
+              <div className="mt-4 text-center">
+                <Button variant="link" onClick={() => setShowMoodTracker(false)}>
+                  Duygu takibini gizle
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <div className="mb-8 text-center">
+              <Button variant="outline" onClick={() => setShowMoodTracker(true)}>
+                <BarChart className="mr-2 h-4 w-4" />
+                Duygu takibini göster
+              </Button>
             </div>
           )}
 

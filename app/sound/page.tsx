@@ -1,27 +1,99 @@
 "use client"
 
-import { useEffect } from "react"
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import Image from "next/image"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { ArrowLeft, Volume2 } from "lucide-react"
 import SoundPlayer from "@/components/sound-player"
+import { motion } from "framer-motion"
 
-// Sample sound options - in a real app, these would be actual audio files
+// Gerçek ses dosyaları
 const soundOptions = [
-  { id: "rain", name: "Yağmur", src: "#" },
-  { id: "waves", name: "Dalgalar", src: "#" },
-  { id: "forest", name: "Orman", src: "#" },
-  { id: "fire", name: "Ateş", src: "#" },
-  { id: "wind", name: "Rüzgar", src: "#" },
+  { id: "rain", name: "Yağmur", src: "/sounds/rain.mp3" },
+  { id: "waves", name: "Dalgalar", src: "/sounds/waves.mp3" },
+  { id: "forest", name: "Orman", src: "/sounds/forest.mp3" },
+  { id: "fire", name: "Ateş", src: "/sounds/fire.mp3" },
+  { id: "wind", name: "Rüzgar", src: "/sounds/wind.mp3" },
 ]
 
 export default function SoundPage() {
-  useEffect(() => {
-    // Redirect to home page
-    window.location.href = "/"
-  }, [])
+  const router = useRouter()
+  const [selectedSound, setSelectedSound] = useState<string | null>(null)
+
+  const handleBack = () => {
+    router.back()
+  }
+
+  const handleSoundSelect = (soundId: string) => {
+    setSelectedSound(soundId)
+  }
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <p>Yönlendiriliyorsunuz...</p>
+    <main className="min-h-screen flex flex-col relative overflow-hidden">
+      {/* Background image */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-cyan-800/70 to-blue-900/90 z-10" />
+        <Image
+          src="/images/background.png"
+          alt="Rahatlatıcı sesler arka planı"
+          fill
+          className="object-cover"
+          sizes="100vw"
+        />
+      </div>
+
+      <div className="container max-w-4xl mx-auto px-4 py-8 flex flex-col items-center flex-grow relative z-20">
+        <div className="w-full flex justify-start mb-6">
+          <Button variant="ghost" onClick={handleBack} className="text-white">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Geri Dön
+          </Button>
+        </div>
+
+        <div className="text-center mb-8 text-white">
+          <h1 className="text-3xl md:text-4xl font-bold mb-4">Rahatlatıcı Sesler</h1>
+          <p className="text-lg text-white/80 max-w-2xl mx-auto">
+            Rahatlama ve odaklanma için doğal sesler dinleyin. Bu sesler, stresi azaltmaya ve zihinsel huzuru artırmaya
+            yardımcı olabilir.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 w-full max-w-2xl">
+          {soundOptions.map((sound) => (
+            <motion.div key={sound.id} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Card
+                className={`cursor-pointer transition-all duration-200 h-40 overflow-hidden ${
+                  selectedSound === sound.id
+                    ? "ring-2 ring-offset-2 ring-cyan-400 bg-white/20"
+                    : "bg-white/10 hover:bg-white/15"
+                } backdrop-blur-sm`}
+                onClick={() => handleSoundSelect(sound.id)}
+              >
+                <CardContent className="p-0 h-full flex flex-col">
+                  <div className="relative flex-1">
+                    <Image src="/images/background.png" alt={sound.name} fill className="object-cover opacity-50" />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <Volume2 className="h-12 w-12 text-white opacity-70" />
+                    </div>
+                  </div>
+                  <div className="p-3 text-center text-white font-medium">{sound.name}</div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="mt-8 text-center text-white/80">
+          <p>
+            Sesleri arka planda çalmaya devam etmek için sayfadan ayrılabilirsiniz. Ses kontrolü sağ alt köşede
+            görünecektir.
+          </p>
+        </div>
+      </div>
+
       <SoundPlayer soundOptions={soundOptions} />
-    </div>
+    </main>
   )
 }
