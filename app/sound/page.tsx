@@ -5,29 +5,58 @@ import { useRouter } from "next/navigation"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { ArrowLeft, Volume2 } from "lucide-react"
+import { ArrowLeft, Volume2, AlertTriangle } from "lucide-react"
 import SoundPlayer from "@/components/sound-player"
 import { motion } from "framer-motion"
 
-// Gerçek ses dosyaları
+// Gerçek ses dosyaları - Fallback URL'ler eklendi
 const soundOptions = [
-  { id: "rain", name: "Yağmur", src: "/sounds/rain.mp3" },
-  { id: "waves", name: "Dalgalar", src: "/sounds/waves.mp3" },
-  { id: "forest", name: "Orman", src: "/sounds/forest.mp3" },
-  { id: "fire", name: "Ateş", src: "/sounds/fire.mp3" },
-  { id: "wind", name: "Rüzgar", src: "/sounds/wind.mp3" },
+  {
+    id: "rain",
+    name: "Yağmur",
+    // Fallback olarak kullanılabilecek bir yağmur sesi URL'si
+    src: "https://assets.mixkit.co/sfx/preview/mixkit-light-rain-loop-2393.mp3",
+  },
+  {
+    id: "waves",
+    name: "Dalgalar",
+    // Fallback olarak kullanılabilecek bir dalga sesi URL'si
+    src: "https://assets.mixkit.co/sfx/preview/mixkit-sea-waves-loop-1196.mp3",
+  },
+  {
+    id: "forest",
+    name: "Orman",
+    // Fallback olarak kullanılabilecek bir orman sesi URL'si
+    src: "https://assets.mixkit.co/sfx/preview/mixkit-forest-birds-ambience-1210.mp3",
+  },
+  {
+    id: "fire",
+    name: "Ateş",
+    // Fallback olarak kullanılabilecek bir ateş sesi URL'si
+    src: "https://assets.mixkit.co/sfx/preview/mixkit-campfire-crackles-1330.mp3",
+  },
+  {
+    id: "wind",
+    name: "Rüzgar",
+    // Fallback olarak kullanılabilecek bir rüzgar sesi URL'si
+    src: "https://assets.mixkit.co/sfx/preview/mixkit-blizzard-cold-winds-loop-1153.mp3",
+  },
 ]
 
 export default function SoundPage() {
   const router = useRouter()
   const [selectedSound, setSelectedSound] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleBack = () => {
     router.back()
   }
 
   const handleSoundSelect = (soundId: string) => {
+    setIsLoading(true)
     setSelectedSound(soundId)
+    // Simüle edilmiş yükleme süresi
+    setTimeout(() => setIsLoading(false), 500)
   }
 
   return (
@@ -58,6 +87,13 @@ export default function SoundPage() {
             Rahatlama ve odaklanma için doğal sesler dinleyin. Bu sesler, stresi azaltmaya ve zihinsel huzuru artırmaya
             yardımcı olabilir.
           </p>
+
+          <div className="mt-4 bg-yellow-500/20 p-3 rounded-lg inline-block">
+            <div className="flex items-center text-yellow-300 text-sm">
+              <AlertTriangle className="h-4 w-4 mr-2" />
+              <span>Ses dosyaları internet bağlantısı gerektirir.</span>
+            </div>
+          </div>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 w-full max-w-2xl">
@@ -75,7 +111,11 @@ export default function SoundPage() {
                   <div className="relative flex-1">
                     <Image src="/images/background.png" alt={sound.name} fill className="object-cover opacity-50" />
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <Volume2 className="h-12 w-12 text-white opacity-70" />
+                      {isLoading && selectedSound === sound.id ? (
+                        <div className="h-12 w-12 rounded-full border-4 border-t-transparent border-white/70 animate-spin" />
+                      ) : (
+                        <Volume2 className="h-12 w-12 text-white opacity-70" />
+                      )}
                     </div>
                   </div>
                   <div className="p-3 text-center text-white font-medium">{sound.name}</div>

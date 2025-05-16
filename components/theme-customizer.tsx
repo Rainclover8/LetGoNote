@@ -66,9 +66,13 @@ export default function ThemeCustomizer() {
   useEffect(() => {
     // Load saved theme from localStorage
     const savedTheme = localStorage.getItem("selectedTheme")
-    if (savedTheme) {
+    if (savedTheme && themeColors.some((t) => t.id === savedTheme)) {
       setSelectedTheme(savedTheme)
       applyTheme(savedTheme)
+    } else {
+      // Varsayılan temayı uygula
+      setSelectedTheme("default")
+      applyTheme("default")
     }
   }, [])
 
@@ -76,10 +80,19 @@ export default function ThemeCustomizer() {
     const theme = themeColors.find((t) => t.id === themeId)
     if (!theme) return
 
-    // Apply CSS variables
-    document.documentElement.style.setProperty("--primary", theme.primary)
-    document.documentElement.style.setProperty("--secondary", theme.secondary)
-    document.documentElement.style.setProperty("--accent", theme.accent)
+    // Apply CSS variables to :root element
+    const root = document.documentElement
+    root.style.setProperty("--primary", theme.primary)
+    root.style.setProperty("--primary-foreground", "210 40% 98%")
+
+    root.style.setProperty("--secondary", theme.secondary)
+    root.style.setProperty("--secondary-foreground", "222.2 47.4% 11.2%")
+
+    root.style.setProperty("--accent", theme.accent)
+    root.style.setProperty("--accent-foreground", "222.2 47.4% 11.2%")
+
+    // Update button and UI colors
+    root.style.setProperty("--ring", theme.primary)
 
     // Save to localStorage
     localStorage.setItem("selectedTheme", themeId)
@@ -96,7 +109,7 @@ export default function ThemeCustomizer() {
         size="icon"
         variant="outline"
         onClick={() => setIsOpen(!isOpen)}
-        className="rounded-full h-10 w-10 bg-white shadow-md"
+        className="rounded-full h-10 w-10 bg-indigo-100 border-indigo-300 shadow-md hover:bg-indigo-200 text-indigo-600"
       >
         <Paintbrush className="h-5 w-5" />
       </Button>
