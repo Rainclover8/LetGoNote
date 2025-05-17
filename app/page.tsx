@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 import { getRandomQuote } from "@/app/actions/quotes"
 import ThemeCustomizer from "@/components/theme-customizer"
+import DarkModeToggle from "@/components/dark-mode-toggle"
 
 export default async function LandingPage() {
   // Get a random inspirational quote from our local collection
@@ -13,7 +14,7 @@ export default async function LandingPage() {
     <main className="min-h-screen flex flex-col relative overflow-hidden">
       {/* Background image */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-800/70 to-slate-900/90 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-800/70 to-slate-900/90 dark:from-slate-900/90 dark:to-black z-10" />
         <Image
           src="/images/background.png"
           alt="Huzurlu manzara"
@@ -51,7 +52,7 @@ export default async function LandingPage() {
             </div>
           )}
 
-          <div className="mt-8 md:mt-12 flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="mt-8 md:mt-12 flex flex-wrap gap-4 justify-center">
             <Link href="/emotion">
               <Button
                 size="lg"
@@ -72,6 +73,32 @@ export default async function LandingPage() {
               </Button>
             </Link>
           </div>
+
+          <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+            <Link href="/journal">
+              <Button variant="outline" className="w-full bg-white/10 hover:bg-white/20 text-white border-white/20">
+                Günlüğüm
+              </Button>
+            </Link>
+
+            <Link href="/motivation">
+              <Button variant="outline" className="w-full bg-white/10 hover:bg-white/20 text-white border-white/20">
+                Motivasyon
+              </Button>
+            </Link>
+
+            <Link href="/stats">
+              <Button variant="outline" className="w-full bg-white/10 hover:bg-white/20 text-white border-white/20">
+                İstatistikler
+              </Button>
+            </Link>
+
+            <Link href="/quotes">
+              <Button variant="outline" className="w-full bg-white/10 hover:bg-white/20 text-white border-white/20">
+                Alıntılar
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
 
@@ -89,7 +116,14 @@ export default async function LandingPage() {
       </footer>
 
       {/* Theme customizer */}
-      <ThemeCustomizer />
+      <div className="fixed bottom-4 left-4 z-50 flex flex-col gap-2">
+        <ThemeCustomizer />
+      </div>
+
+      {/* Dark mode toggle */}
+      <div className="fixed top-4 right-4 z-50">
+        <DarkModeToggle />
+      </div>
     </main>
   )
 }
