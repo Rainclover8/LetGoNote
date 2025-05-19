@@ -41,18 +41,9 @@
 }
 
 /* Tema geçişleri için stil */
-body,
-button,
-a,
-div,
-span,
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+*,
+*::before,
+*::after {
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -138,4 +129,44 @@ h6 {
 .theme-applied .btn-accent {
   background-color: hsl(var(--accent));
   color: hsl(var(--accent-foreground));
+}
+
+/* Tema değişikliği için özel sınıflar - Butonlar */
+.theme-applied button[class*="bg-primary"],
+.theme-applied a[class*="bg-primary"] {
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+}
+
+.theme-applied button[class*="bg-secondary"],
+.theme-applied a[class*="bg-secondary"] {
+  background-color: hsl(var(--secondary));
+  color: hsl(var(--secondary-foreground));
+}
+
+.theme-applied button[class*="bg-accent"],
+.theme-applied a[class*="bg-accent"] {
+  background-color: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+}
+
+/* Tema değişikliği için özel sınıflar - Kartlar */
+.theme-applied div[class*="bg-card"] {
+  background-color: hsl(var(--card));
+  color: hsl(var(--card-foreground));
+}
+
+/* Tema değişikliği için özel sınıflar - Diğer */
+.theme-applied div[class*="bg-muted"] {
+  background-color: hsl(var(--muted));
+  color: hsl(var(--muted-foreground));
+}
+
+.theme-applied div[class*="border-"] {
+  border-color: hsl(var(--border));
+}
+
+.theme-applied input[class*="bg-input"] {
+  background-color: hsl(var(--input));
+  border-color: hsl(var(--border));
 }

@@ -101,6 +101,18 @@ export default function ThemeCustomizer() {
       // Update button and UI colors
       root.style.setProperty("--ring", theme.primary)
 
+      // Diğer renkleri de güncelle
+      root.style.setProperty("--background", "0 0% 100%")
+      root.style.setProperty("--foreground", "222.2 84% 4.9%")
+      root.style.setProperty("--card", "0 0% 100%")
+      root.style.setProperty("--card-foreground", "222.2 84% 4.9%")
+      root.style.setProperty("--popover", "0 0% 100%")
+      root.style.setProperty("--popover-foreground", "222.2 84% 4.9%")
+      root.style.setProperty("--muted", theme.secondary)
+      root.style.setProperty("--muted-foreground", "215.4 16.3% 46.9%")
+      root.style.setProperty("--border", "214.3 31.8% 91.4%")
+      root.style.setProperty("--input", "214.3 31.8% 91.4%")
+
       // Force a re-render of styled components
       document.body.classList.remove("theme-applied")
       void document.body.offsetWidth // Trigger reflow

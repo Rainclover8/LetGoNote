@@ -3,7 +3,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 import { getRandomQuote } from "@/app/actions/quotes"
-import ThemeCustomizer from "@/components/theme-customizer"
+import EnhancedThemeCustomizer from "@/components/enhanced-theme-customizer"
 import DarkModeToggle from "@/components/dark-mode-toggle"
 
 export default async function LandingPage() {
@@ -99,6 +99,20 @@ export default async function LandingPage() {
               </Button>
             </Link>
           </div>
+
+          <div className="mt-4 grid grid-cols-2 md:grid-cols-2 gap-4">
+            <Link href="/reminders">
+              <Button variant="outline" className="w-full bg-white/10 hover:bg-white/20 text-white border-white/20">
+                Hatırlatıcılar
+              </Button>
+            </Link>
+
+            <Link href="/sound">
+              <Button variant="outline" className="w-full bg-white/10 hover:bg-white/20 text-white border-white/20">
+                Rahatlatıcı Sesler
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
 
@@ -117,7 +131,7 @@ export default async function LandingPage() {
 
       {/* Theme customizer */}
       <div className="fixed bottom-4 left-4 z-50 flex flex-col gap-2">
-        <ThemeCustomizer />
+        <EnhancedThemeCustomizer />
       </div>
 
       {/* Dark mode toggle */}
