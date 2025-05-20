@@ -170,3 +170,15 @@
   background-color: hsl(var(--input));
   border-color: hsl(var(--border));
 }
+
+/* Tema duyarlı arka planlar */
+.app-background {
+  background-image: url("/images/background.png");
+  background-size: cover;
+  background-position: center;
+  transition: background-image 1s ease;
+}
+
+.dark .app-background {
+  background-image: url("/images/background.png");
+}

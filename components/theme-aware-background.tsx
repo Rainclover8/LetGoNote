@@ -13,6 +13,10 @@ interface ThemeAwareBackgroundProps {
   children?: React.ReactNode
 }
 
+// Varsayılan arka plan görselleri
+const DEFAULT_LIGHT_BG = "/images/background.png"
+const DEFAULT_DARK_BG = "/images/background.png"
+
 export default function ThemeAwareBackground({
   className = "",
   overlayClassName = "from-slate-800/70 to-slate-900/90 dark:from-slate-900/90 dark:to-black",
@@ -20,7 +24,7 @@ export default function ThemeAwareBackground({
 }: ThemeAwareBackgroundProps) {
   const { theme, resolvedTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
-  const [currentBackground, setCurrentBackground] = useState("/images/background.png")
+  const [currentBackground, setCurrentBackground] = useState(DEFAULT_LIGHT_BG)
 
   // Hydration için
   useEffect(() => {
@@ -32,7 +36,7 @@ export default function ThemeAwareBackground({
     if (!mounted) return
 
     const isDark = theme === "dark" || resolvedTheme === "dark"
-    setCurrentBackground(isDark ? "/images/background-dark.png" : "/images/background-light.png")
+    setCurrentBackground(isDark ? DEFAULT_DARK_BG : DEFAULT_LIGHT_BG)
   }, [theme, resolvedTheme, mounted])
 
   if (!mounted) {
@@ -40,7 +44,13 @@ export default function ThemeAwareBackground({
     return (
       <div className={`absolute inset-0 z-0 ${className}`}>
         <div className={`absolute inset-0 bg-gradient-to-br ${overlayClassName} z-10`} />
-        <Image src="/images/background.png" alt="Arka plan" fill className="object-cover" sizes="100vw" />
+        <Image
+          src={DEFAULT_LIGHT_BG || "/placeholder.svg"}
+          alt="Arka plan"
+          fill
+          className="object-cover"
+          sizes="100vw"
+        />
         {children}
       </div>
     )

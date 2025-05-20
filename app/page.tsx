@@ -5,7 +5,6 @@ import { ArrowRight } from "lucide-react"
 import { getRandomQuote } from "@/app/actions/quotes"
 import EnhancedThemeCustomizer from "@/components/enhanced-theme-customizer"
 import DarkModeToggle from "@/components/dark-mode-toggle"
-import ThemeAwareBackground from "@/components/theme-aware-background"
 
 export default async function LandingPage() {
   // Get a random inspirational quote from our local collection
@@ -13,8 +12,18 @@ export default async function LandingPage() {
 
   return (
     <main className="min-h-screen flex flex-col relative overflow-hidden">
-      {/* Theme-aware background */}
-      <ThemeAwareBackground />
+      {/* Background image */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-800/70 to-slate-900/90 dark:from-slate-900/90 dark:to-black z-10" />
+        <Image
+          src="/images/background.png"
+          alt="Huzurlu manzara"
+          fill
+          priority
+          className="object-cover"
+          sizes="100vw"
+        />
+      </div>
 
       {/* Content */}
       <div className="container relative z-20 flex flex-col items-center justify-center flex-grow px-4 py-16 text-white">
