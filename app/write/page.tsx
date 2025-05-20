@@ -4,13 +4,13 @@ import type React from "react"
 
 import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
-import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Flame, Trash2, Wind, Droplet, Shovel, Sparkles, RefreshCw } from "lucide-react"
 import { motion } from "framer-motion"
 import { useToast } from "@/hooks/use-toast"
 import { type Quote, getRandomQuote, getTagForEmotion } from "@/app/actions/quotes"
+import ThemeAwareBackground from "@/components/theme-aware-background"
 
 const releaseMethods = [
   { id: "burn", icon: Flame, label: "Yak", color: "bg-red-500" },
@@ -96,32 +96,41 @@ export default function WritePage() {
 
   return (
     <main className="min-h-screen flex flex-col relative overflow-hidden">
-      {/* Background image */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-slate-100/80 z-10" />
-        <Image src="/images/background.png" alt="Duygu arka planı" fill className="object-cover" sizes="100vw" />
-      </div>
+      {/* Theme-aware background with custom overlay */}
+      <ThemeAwareBackground overlayClassName="from-white/80 to-slate-100/80 dark:from-slate-800/80 dark:to-slate-900/80" />
 
       <div className="container max-w-4xl mx-auto px-4 py-8 flex flex-col items-center flex-grow relative z-20">
-        <h1 className="text-2xl md:text-3xl font-bold mb-6 text-center text-slate-800">İçinden geçenleri yaz</h1>
+        <h1 className="text-2xl md:text-3xl font-bold mb-6 text-center text-slate-800 dark:text-white">
+          İçinden geçenleri yaz
+        </h1>
 
-        <Card className="w-full max-w-2xl p-4 mb-6 shadow-lg bg-white/80 backdrop-blur-sm">
+        <Card className="w-full max-w-2xl p-4 mb-6 shadow-lg bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm">
           <textarea
             ref={textareaRef}
             value={text}
             onChange={handleTextChange}
             placeholder="Ne düşünüyorsan, içinden ne geçiyorsa yaz... sadece sen okuyacaksın."
-            className="w-full min-h-[200px] p-4 text-lg border-0 focus:ring-0 resize-none bg-transparent"
+            className="w-full min-h-[200px] p-4 text-lg border-0 focus:ring-0 resize-none bg-transparent dark:text-white dark:placeholder:text-slate-400"
             style={{ overflow: "hidden" }}
           />
 
           <div className="flex justify-between items-center">
-            <Button variant="outline" size="sm" onClick={() => loadRandomQuote()} className="text-slate-600">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => loadRandomQuote()}
+              className="text-slate-600 dark:text-slate-300"
+            >
               <RefreshCw className={`mr-2 h-4 w-4 ${isLoadingQuote ? "animate-spin" : ""}`} />
               Yeni Alıntı
             </Button>
 
-            <Button variant="outline" size="sm" onClick={showRandomAffirmation} className="text-slate-600">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={showRandomAffirmation}
+              className="text-slate-600 dark:text-slate-300"
+            >
               <Sparkles className="mr-2 h-4 w-4" />
               Beni Rahatlat
             </Button>
@@ -135,15 +144,21 @@ export default function WritePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <Card className="p-4 bg-indigo-50/80 backdrop-blur-sm border-indigo-100">
-              <blockquote className="text-indigo-700 italic text-sm">"{currentQuote.content}"</blockquote>
-              <footer className="text-right text-indigo-500 text-xs mt-2">— {currentQuote.author || "Anonim"}</footer>
+            <Card className="p-4 bg-indigo-50/80 dark:bg-indigo-900/30 backdrop-blur-sm border-indigo-100 dark:border-indigo-800">
+              <blockquote className="text-indigo-700 dark:text-indigo-300 italic text-sm">
+                "{currentQuote.content}"
+              </blockquote>
+              <footer className="text-right text-indigo-500 dark:text-indigo-400 text-xs mt-2">
+                — {currentQuote.author || "Anonim"}
+              </footer>
             </Card>
           </motion.div>
         )}
 
         <div className="w-full max-w-2xl mb-8">
-          <h2 className="text-lg font-medium mb-4 text-slate-700 text-center">Yazını nasıl bırakmak istersin?</h2>
+          <h2 className="text-lg font-medium mb-4 text-slate-700 dark:text-slate-200 text-center">
+            Yazını nasıl bırakmak istersin?
+          </h2>
 
           <div className="grid grid-cols-3 md:grid-cols-5 gap-3">
             {releaseMethods.map((method) => {
@@ -151,8 +166,10 @@ export default function WritePage() {
               return (
                 <motion.div key={method.id} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Card
-                    className={`p-3 cursor-pointer transition-all duration-200 flex flex-col items-center justify-center bg-white/70 backdrop-blur-sm ${
-                      releaseMethod === method.id ? "ring-2 ring-offset-2 ring-blue-500" : "hover:bg-white/90"
+                    className={`p-3 cursor-pointer transition-all duration-200 flex flex-col items-center justify-center bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm ${
+                      releaseMethod === method.id
+                        ? "ring-2 ring-offset-2 ring-blue-500"
+                        : "hover:bg-white/90 dark:hover:bg-slate-700/90"
                     }`}
                     onClick={() => setReleaseMethod(method.id)}
                   >
@@ -161,7 +178,7 @@ export default function WritePage() {
                     >
                       <Icon className="h-5 w-5" />
                     </div>
-                    <span className="text-sm font-medium">{method.label}</span>
+                    <span className="text-sm font-medium dark:text-white">{method.label}</span>
                   </Card>
                 </motion.div>
               )

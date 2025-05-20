@@ -2,11 +2,11 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ArrowRight } from "lucide-react"
 import { motion } from "framer-motion"
+import ThemeAwareBackground from "@/components/theme-aware-background"
 
 const emotions = [
   {
@@ -60,28 +60,14 @@ export default function EmotionPage() {
 
   return (
     <main className="min-h-screen flex flex-col relative overflow-hidden">
-      {/* Background image */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-100/80 to-slate-200/80 z-10" />
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="w-full h-full"
-        >
-          <Image
-            src="/images/background.png"
-            alt="Duygu arka planı"
-            fill
-            className="object-cover transition-opacity duration-500"
-            sizes="100vw"
-          />
-        </motion.div>
-      </div>
+      {/* Theme-aware background with custom overlay */}
+      <ThemeAwareBackground overlayClassName="from-slate-100/80 to-slate-200/80 dark:from-slate-800/80 dark:to-slate-900/80" />
 
       <div className="container max-w-4xl mx-auto px-4 py-16 flex flex-col items-center flex-grow relative z-20">
-        <h1 className="text-3xl md:text-4xl font-bold mb-8 text-center text-slate-800">Şu an nasıl hissediyorsun?</h1>
-        <p className="text-lg text-slate-600 mb-10 text-center max-w-2xl">
+        <h1 className="text-3xl md:text-4xl font-bold mb-8 text-center text-slate-800 dark:text-slate-100">
+          Şu an nasıl hissediyorsun?
+        </h1>
+        <p className="text-lg text-slate-600 dark:text-slate-300 mb-10 text-center max-w-2xl">
           Duygularını tanımlamak, onları ifade etmenin ilk adımıdır. Şu anki ruh haline en yakın olanı seç.
         </p>
 
@@ -92,12 +78,12 @@ export default function EmotionPage() {
                 className={`p-4 cursor-pointer transition-all duration-200 flex flex-col items-center justify-center h-32 ${
                   selectedEmotion === emotion.id
                     ? `ring-2 ring-offset-2 ring-blue-500 bg-gradient-to-br ${emotion.color}`
-                    : "hover:bg-white/80 bg-white/60 backdrop-blur-sm"
+                    : "hover:bg-white/80 dark:hover:bg-slate-800/80 bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm"
                 }`}
                 onClick={() => handleEmotionSelect(emotion.id)}
               >
                 <span className="text-4xl mb-2">{emotion.emoji}</span>
-                <span className="font-medium">{emotion.label}</span>
+                <span className="font-medium dark:text-white">{emotion.label}</span>
               </Card>
             </motion.div>
           ))}

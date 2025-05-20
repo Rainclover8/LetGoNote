@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { motion, AnimatePresence } from "framer-motion"
 import { Flame, Trash2, Wind, Droplet, Shovel } from "lucide-react"
@@ -14,6 +13,7 @@ import PaperPieces from "@/components/animations/paper-pieces"
 import FireEffect from "@/components/animations/fire-effect"
 import TrashCan from "@/components/animations/trash-can"
 import Paper from "@/components/paper"
+import ThemeAwareBackground from "@/components/theme-aware-background"
 
 export default function ReleasePage() {
   const router = useRouter()
@@ -64,17 +64,8 @@ export default function ReleasePage() {
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
-      {/* Background image */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-800/70 to-slate-900/90 z-10" />
-        <Image
-          src="/images/background.png"
-          alt="Serbest bırakma arka planı"
-          fill
-          className="object-cover"
-          sizes="100vw"
-        />
-      </div>
+      {/* Theme-aware background with custom overlay */}
+      <ThemeAwareBackground overlayClassName="from-slate-800/70 to-slate-900/90 dark:from-black/90 dark:to-slate-900/90" />
 
       <div className="w-full max-w-4xl flex flex-col items-center relative z-20 p-4">
         <AnimatePresence>
@@ -211,13 +202,9 @@ function ReleaseAnimation({ text, method, phase }: { text: string; method: strin
                 }}
                 transition={{ duration: 1 }}
               >
-                <Image
-                  src="/images/background.png"
-                  alt="Su dokusu"
-                  fill
-                  className="object-cover mix-blend-overlay opacity-70"
-                />
-                {phase >= 2 && <WaterRipples count={5} />}
+                <div className="absolute inset-0 mix-blend-overlay opacity-70">
+                  {phase >= 2 && <WaterRipples count={5} />}
+                </div>
               </motion.div>
             </>
           ),
