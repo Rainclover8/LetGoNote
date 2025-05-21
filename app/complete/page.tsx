@@ -6,33 +6,50 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { motion } from "framer-motion"
-import { Home, PenLine, Heart } from "lucide-react"
-
-const affirmations = [
-  "Her gün yeni bir başlangıç.",
-  "Kendine iyi davranmayı unutma.",
-  "Yalnız değilsin.",
-  "Duygularını ifade etmek cesaret gerektirir.",
-  "Bugün attığın adım, yarın için bir armağan.",
-  "Kendini affetmek, iyileşmenin ilk adımıdır.",
-  "Güçlü olmak, her zaman güçlü hissetmek değildir.",
-  "Küçük adımlar, büyük değişimler yaratır.",
-  "Nefes al, şu an buradasın.",
-  "Her duygu geçicidir, sen kalıcısın.",
-]
+import { Home, PenLine, Heart, BookOpen, BarChart } from "lucide-react"
+import QuoteCarousel from "@/components/quote-carousel"
+import { type Quote, getRandomQuotes, getTagForEmotion } from "@/app/actions/quotes"
+import ConfettiEffect from "@/components/confetti-effect"
+import MoodTracker from "@/components/mood-tracker"
 
 export default function CompletePage() {
   const router = useRouter()
-  const [affirmation, setAffirmation] = useState("")
+  const [emotion, setEmotion] = useState<string | null>(null)
+  const [initialQuotes, setInitialQuotes] = useState<Quote[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [quoteTag, setQuoteTag] = useState<string | undefined>(undefined)
+  const [showMoodTracker, setShowMoodTracker] = useState(false)
 
   useEffect(() => {
-    // Clear localStorage
+    // localStorage'dan duygu durumunu al
+    const savedEmotion = localStorage.getItem("emotion")
+    setEmotion(savedEmotion)
+
+    // Diğer localStorage verilerini temizle
     localStorage.removeItem("text")
     localStorage.removeItem("releaseMethod")
 
-    // Get a random affirmation
-    const randomIndex = Math.floor(Math.random() * affirmations.length)
-    setAffirmation(affirmations[randomIndex])
+    // Başlangıç alıntılarını yükle
+    const loadInitialQuotes = async () => {
+      try {
+        if (savedEmotion) {
+          const tag = await getTagForEmotion(savedEmotion)
+          setQuoteTag(tag)
+          const quotes = await getRandomQuotes(3, tag)
+          setInitialQuotes(Array.isArray(quotes) ? quotes : [])
+        } else {
+          const quotes = await getRandomQuotes(3)
+          setInitialQuotes(Array.isArray(quotes) ? quotes : [])
+        }
+      } catch (error) {
+        console.error("Error loading initial quotes:", error)
+        setInitialQuotes([])
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    loadInitialQuotes()
   }, [])
 
   const handleWriteAgain = () => {
@@ -43,12 +60,19 @@ export default function CompletePage() {
     router.push("/")
   }
 
+  const handleViewQuotes = () => {
+    router.push("/quotes")
+  }
+
   return (
     <main className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden p-4">
+      {/* Konfeti efekti */}
+      <ConfettiEffect pieceCount={150} duration={5000} />
+
       {/* Background image */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/90 to-purple-100/90 z-10" />
-        <Image src="/images/forest-bg.png" alt="Huzurlu orman manzarası" fill className="object-cover" sizes="100vw" />
+        <Image src="/images/background.png" alt="Huzurlu manzara" fill className="object-cover" sizes="100vw" />
       </div>
 
       <motion.div
@@ -63,17 +87,46 @@ export default function CompletePage() {
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.3, type: "spring", stiffness: 200, damping: 15 }}
-              className="w-16 h-16 rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center mx-auto mb-6"
+              className="w-16 h-16 rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center mx-auto mb-6 overflow-hidden"
             >
-              <Heart className="h-8 w-8 text-white" />
+              <Image
+                src="/images/background.png"
+                alt="Tamamlandı"
+                width={64}
+                height={64}
+                className="object-cover opacity-50"
+              />
+              <Heart className="h-8 w-8 text-white absolute" />
             </motion.div>
 
             <h1 className="text-2xl md:text-3xl font-bold mb-4 text-slate-800">Teşekkürler</h1>
-
             <p className="text-lg md:text-xl mb-6 text-slate-600">Umarız kendini daha iyi hissediyorsun.</p>
-
-            <blockquote className="italic text-xl md:text-2xl text-indigo-700 mb-8 px-6">"{affirmation}"</blockquote>
           </div>
+
+          {!isLoading && initialQuotes.length > 0 && (
+            <div className="mb-8 bg-white/50 backdrop-blur-sm rounded-lg p-6 shadow-inner">
+              <h2 className="text-lg font-medium text-slate-700 mb-4">Seni ilhamlandıracak düşünceler:</h2>
+              <QuoteCarousel initialQuotes={initialQuotes} tag={quoteTag} />
+            </div>
+          )}
+
+          {showMoodTracker ? (
+            <div className="mb-8">
+              <MoodTracker />
+              <div className="mt-4 text-center">
+                <Button variant="link" onClick={() => setShowMoodTracker(false)}>
+                  Duygu takibini gizle
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <div className="mb-8 text-center">
+              <Button variant="outline" onClick={() => setShowMoodTracker(true)}>
+                <BarChart className="mr-2 h-4 w-4" />
+                Duygu takibini göster
+              </Button>
+            </div>
+          )}
 
           <div className="flex flex-col md:flex-row gap-4 justify-center">
             <Button
@@ -93,6 +146,13 @@ export default function CompletePage() {
             >
               <PenLine className="mr-2 h-5 w-5" />
               Tekrar Yaz
+            </Button>
+          </div>
+
+          <div className="mt-6 text-center">
+            <Button variant="link" onClick={handleViewQuotes} className="text-indigo-500 hover:text-indigo-700">
+              <BookOpen className="mr-2 h-4 w-4" />
+              Daha Fazla İlham Verici Alıntı
             </Button>
           </div>
         </Card>

@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     siteName: "LetGoNote",
     images: [
       {
-        url: "/images/og-image.jpg",
+        url: "/images/background.png",
         width: 1200,
         height: 630,
         alt: "LetGoNote - Duygusal rahatlama platformu",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "LetGoNote — Yaz, Bırak, Rahatla",
     description: "Duygularını ifade et, serbest bırak ve kendini daha iyi hisset.",
-    images: ["/images/twitter-image.jpg"],
+    images: ["/images/background.png"],
   },
   viewport: "width=device-width, initial-scale=1",
   robots: {
@@ -54,12 +54,12 @@ export default function RootLayout({
   return (
     <html lang="tr">
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="icon" href="/images/background.png" sizes="any" />
+        <link rel="apple-touch-icon" href="/images/background.png" />
         <StructuredData />
       </head>
       <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           {children}
           <Toaster />
         </ThemeProvider>
