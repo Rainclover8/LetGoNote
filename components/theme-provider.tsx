@@ -9,6 +9,3 @@ export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
     </NextThemesProvider>
   )
 }
-
-
-// Şarkı Eklenecek

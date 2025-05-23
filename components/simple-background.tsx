@@ -17,7 +17,7 @@ export default function SimpleBackground({ children, className = "" }: SimpleBac
   useEffect(() => {
     setMounted(true)
   }, [])
-
+ // Yeni Eklemeler gelecek!
   if (!mounted) {
     return (
       <div className={`min-h-screen app-background ${className}`}>
