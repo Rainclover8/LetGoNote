@@ -18,6 +18,8 @@ export default function SimpleBackground({ children, className = "" }: SimpleBac
     setMounted(true)
   }, [])
  // Yeni Eklemeler gelecek!
+
+ // June 4'te ancak promt girebileceğim
   if (!mounted) {
     return (
       <div className={`min-h-screen app-background ${className}`}>
