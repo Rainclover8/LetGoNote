@@ -24,6 +24,8 @@ export default function SimpleBackground({ children, className = "" }: SimpleBac
  // Ufak tefek eklemeler!
  
  // Hala ai paketimiz yenilenmedi! 
+
+ // limitimiz geldi fakat yks sonrası kod yazımına başlayacağız
   if (!mounted) {
     return (
       <div className={`min-h-screen app-background ${className}`}>
