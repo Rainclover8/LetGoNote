@@ -18,6 +18,8 @@ export default function SimpleBackground({ children, className = "" }: SimpleBac
     setMounted(true)
   }, [])
  // Son Eklemelerle yaza veya yazın deli gibi girip yeni alana başlayıp güzel projeler yapacağım. Sınavdan da iyi notlar alıp güzel bir üniye gideceğim
+
+ // Yaza bomba gibi gireceğiz Allahın izniyle. 
   if (!mounted) {
     return (
       <div className={`min-h-screen app-background ${className}`}>
