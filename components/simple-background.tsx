@@ -20,6 +20,10 @@ export default function SimpleBackground({ children, className = "" }: SimpleBac
  // Son Eklemelerle yaza veya yazın deli gibi girip yeni alana başlayıp güzel projeler yapacağım. Sınavdan da iyi notlar alıp güzel bir üniye gideceğim
 
  // Yaza bomba gibi gireceğiz Allahın izniyle. 
+
+ // Yazın ios developer olma yolunda ilerleyeceğim. 
+
+ // Yaz oldu henüz düzgün ilerleyemedim fakat başaracağım şos dev ya da game dev olma yolunda ilerşeyeceğim!
   if (!mounted) {
     return (
       <div className={`min-h-screen app-background ${className}`}>
