@@ -24,6 +24,8 @@ export default function SimpleBackground({ children, className = "" }: SimpleBac
  // Yazın ios developer olma yolunda ilerleyeceğim. 
 
  // Yaz oldu henüz düzgün ilerleyemedim fakat başaracağım şos dev ya da game dev olma yolunda ilerşeyeceğim!
+
+ // Henüz yazmış olduğum hiçbir şeyi yapamadım fakat yakındır umarım, üni tercihlerini yaprtım kabataslak olarak fakat daha değişecek gibi, bir de klavye aldım ve çok güzel, üniversite'ye kayıt olunca istediğim bölüm de gelirse işe gireceğim yani deneyeceğim. Umarım her şey gönlümce olur <3
   if (!mounted) {
     return (
       <div className={`min-h-screen app-background ${className}`}>
