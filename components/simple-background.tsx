@@ -29,6 +29,8 @@ export default function SimpleBackground({ children, className = "" }: SimpleBac
  // Henüz yazmış olduğum hiçbir şeyi yapamadım fakat yakındır umarım, üni tercihlerini yaprtım kabataslak olarak fakat daha değişecek gibi, bir de klavye aldım ve çok güzel, üniversite'ye kayıt olunca istediğim bölüm de gelirse işe gireceğim yani deneyeceğim. Umarım her şey gönlümce olur <3
 
  // Bugün günlerden 10.08.2025 Henüz başlamadım dediğim şeylere!
+
+ // Fakat Artol günlğükj pşlarak projeşlere baslicam ve github
   if (!mounted) {
     return (
       <div className={`min-h-screen app-background ${className}`}>
