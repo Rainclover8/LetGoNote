@@ -30,7 +30,7 @@ export default function SimpleBackground({ children, className = "" }: SimpleBac
 
  // Bugün günlerden 10.08.2025 Henüz başlamadım dediğim şeylere!
 
- // Fakat Artol günlğükj pşlarak projeşlere baslicam ve github
+ // Fakat Artol günlğükj pşlarak projeşlere baslicam ve githubsda yayınlyacağım
   if (!mounted) {
     return (
       <div className={`min-h-screen app-background ${className}`}>
