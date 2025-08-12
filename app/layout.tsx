@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-    generator: 'v0.dev'
+    generator: 'v0.app'
 }
 
 export default function RootLayout({
@@ -59,7 +59,7 @@ export default function RootLayout({
         <StructuredData />
       </head>
       <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+        <ThemeProvider defaultTheme="light">
           {children}
           <Toaster />
         </ThemeProvider>

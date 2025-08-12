@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ArrowRight } from "lucide-react"
 import { motion } from "framer-motion"
-import SimpleBackground from "@/components/simple-background"
+import ThemeAwareBackground from "@/components/theme-aware-background"
 
 const emotions = [
   {
@@ -59,10 +59,15 @@ export default function EmotionPage() {
   }
 
   return (
-    <SimpleBackground>
-      <div className="container max-w-4xl mx-auto px-4 py-16 flex flex-col items-center flex-grow">
-        <h1 className="text-3xl md:text-4xl font-bold mb-8 text-center text-white">Şu an nasıl hissediyorsun?</h1>
-        <p className="text-lg text-white/80 mb-10 text-center max-w-2xl">
+    <main className="min-h-screen flex flex-col relative overflow-hidden">
+      {/* Theme-aware background with custom overlay */}
+      <ThemeAwareBackground overlayClassName="from-slate-100/80 to-slate-200/80 dark:from-slate-800/80 dark:to-slate-900/80" />
+
+      <div className="container max-w-4xl mx-auto px-4 py-16 flex flex-col items-center flex-grow relative z-20">
+        <h1 className="text-3xl md:text-4xl font-bold mb-8 text-center text-slate-800 dark:text-slate-100">
+          Şu an nasıl hissediyorsun?
+        </h1>
+        <p className="text-lg text-slate-600 dark:text-slate-300 mb-10 text-center max-w-2xl">
           Duygularını tanımlamak, onları ifade etmenin ilk adımıdır. Şu anki ruh haline en yakın olanı seç.
         </p>
 
@@ -94,6 +99,6 @@ export default function EmotionPage() {
           <ArrowRight className="ml-2 h-5 w-5" />
         </Button>
       </div>
-    </SimpleBackground>
+    </main>
   )
 }

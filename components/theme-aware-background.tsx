@@ -1,10 +1,9 @@
 "use client"
 
 import type React from "react"
-
 import { useState, useEffect } from "react"
 import Image from "next/image"
-import { useTheme } from "next-themes"
+import { useTheme } from "@/components/theme-provider"
 import { motion, AnimatePresence } from "framer-motion"
 
 interface ThemeAwareBackgroundProps {
@@ -13,18 +12,14 @@ interface ThemeAwareBackgroundProps {
   children?: React.ReactNode
 }
 
-// Varsayılan arka plan görselleri
-const DEFAULT_LIGHT_BG = "/images/background.png"
-const DEFAULT_DARK_BG = "/images/background.png"
-
 export default function ThemeAwareBackground({
   className = "",
   overlayClassName = "from-slate-800/70 to-slate-900/90 dark:from-slate-900/90 dark:to-black",
   children,
 }: ThemeAwareBackgroundProps) {
-  const { theme, resolvedTheme } = useTheme()
+  const { resolvedTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
-  const [currentBackground, setCurrentBackground] = useState(DEFAULT_LIGHT_BG)
+  const [currentBackground, setCurrentBackground] = useState("/images/background.png")
 
   // Hydration için
   useEffect(() => {
@@ -35,22 +30,17 @@ export default function ThemeAwareBackground({
   useEffect(() => {
     if (!mounted) return
 
-    const isDark = theme === "dark" || resolvedTheme === "dark"
-    setCurrentBackground(isDark ? DEFAULT_DARK_BG : DEFAULT_LIGHT_BG)
-  }, [theme, resolvedTheme, mounted])
+    const isDark = resolvedTheme === "dark"
+    // Şimdilik aynı arka planı kullanıyoruz, farklı görseller eklenebilir
+    setCurrentBackground("/images/background.png")
+  }, [resolvedTheme, mounted])
 
   if (!mounted) {
     // Varsayılan arka plan
     return (
       <div className={`absolute inset-0 z-0 ${className}`}>
         <div className={`absolute inset-0 bg-gradient-to-br ${overlayClassName} z-10`} />
-        <Image
-          src={DEFAULT_LIGHT_BG || "/placeholder.svg"}
-          alt="Arka plan"
-          fill
-          className="object-cover"
-          sizes="100vw"
-        />
+        <Image src="/images/background.png" alt="Arka plan" fill className="object-cover" sizes="100vw" priority />
         {children}
       </div>
     )
