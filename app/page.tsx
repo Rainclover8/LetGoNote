@@ -2,15 +2,12 @@ import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
-import { getRandomQuote } from "@/app/actions/quotes"
 import EnhancedThemeCustomizer from "@/components/enhanced-theme-customizer"
 import DarkModeToggle from "@/components/dark-mode-toggle"
 import ThemeAwareBackground from "@/components/theme-aware-background"
+import LandingQuote from "@/components/landing-quote"
 
-export default async function LandingPage() {
-  // Get a random inspirational quote from our local collection
-  const quote = await getRandomQuote("inspirational")
-
+export default function LandingPage() {
   return (
     <main className="min-h-screen flex flex-col relative overflow-hidden">
       {/* Theme-aware background */}
@@ -36,12 +33,8 @@ export default async function LandingPage() {
             Bazen sadece içini dökmen gerekir. Yaz, bırak ve kendine bir nefes ver.
           </p>
 
-          {quote && (
-            <div className="mt-8 mb-10 bg-white/10 backdrop-blur-sm p-6 rounded-lg max-w-2xl mx-auto">
-              <blockquote className="text-lg md:text-xl italic text-white/90">"{quote.content}"</blockquote>
-              <footer className="mt-4 text-right text-white/70">— {quote.author || "Anonim"}</footer>
-            </div>
-          )}
+          {/* Quote component - now client-side */}
+          <LandingQuote />
 
           <div className="mt-8 md:mt-12 flex flex-wrap gap-4 justify-center">
             <Link href="/emotion">
