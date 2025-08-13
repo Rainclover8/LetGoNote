@@ -14,4 +14,5 @@ export default function robots(): MetadataRoute.Robots {
 
 // Birkaç değişikler yapıldı, buglar fixlendi. 
 
-// Henüz hayatımı düzene sokamadım.
+// Henüz hayatımı düzene sokamadım. 
+// Bu günden sonra yani yarın 14.08.2025'de bu işe başlayacağım ve daha düzenli bir hayat yaşayacağım.
