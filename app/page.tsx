@@ -125,3 +125,6 @@ export default function LandingPage() {
     </main>
   )
 }
+
+
+// Henüz dediklerimin hiçbirini yapamadım
